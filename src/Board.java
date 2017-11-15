@@ -17,28 +17,29 @@ public class Board {
         return coordinates.get(x+","+y);
     }
 
-    public String viewGameBoard(Player player){
-        String result = "";
-        for(int j = 8; j<=1; j--){
-            System.out.println(j);
+    public void viewGameBoard(){
+        for(int j = 8; j>=1; j--){
+            System.out.print(j);
             for(int i = 1; i<=8; i++){
                 Coordinate coordinate = getCoordinate(i,j);
                 if(coordinate.isUnit){
-                    result += coordinate.unit.getName();
+                    System.out.print(" "+coordinate.unit.getOwner().getName()+coordinate.unit.getName());
                 }else{
-                    result += "ㅁ";
+                    System.out.print("  X");
                 }
             }
-            if(j!=1) {
-                System.out.println();
-            }
+            System.out.println();
         }
 
         for(int i = 0; i<=8; i++){
-            System.out.println(i);
+            System.out.print(i+"  ");
         }
+    }
 
-        return result;
+    public void putUnitOnBoard(int x, int y, Unit unit){
+        Coordinate coordinate = getCoordinate(x,y);
+        coordinate.setUnit(unit);
+        unit.setCoordinate(coordinate);
     }
 
     class Coordinate{
@@ -61,6 +62,18 @@ public class Board {
         public void leave(){
             this.unit = null;
             isUnit = false;
+        }
+
+        public Unit getUnit() {
+            return unit;
+        }
+
+        public String getCoordinate(){
+            return x+","+y;
+        }
+
+        public boolean isUnit() {
+            return isUnit;
         }
     }
 }
