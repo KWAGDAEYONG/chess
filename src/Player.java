@@ -113,36 +113,41 @@ public class Player {
 
     public void play(){
         System.out.println(this.getName()+"의 턴!");
-
+/*
         System.out.print("내 죽은 말들 : ");
         for(int i = 0; i<dieUnits.size(); i++){
             System.out.print(dieUnits.get(i).getName()+",");
         }
-        System.out.println();
+        System.out.println();*/
 
         board.viewGameBoard();
 
         Unit moveTarget = choiceUnit(board);
 
-        System.out.println("다음중 움직일 좌표를 선택해주세요.");
+
         List<String> directions = moveTarget.canMoveCoordinate(board, this);
-        for(String direction : directions){
-            System.out.println(direction);
+
+        if(directions.isEmpty()){
+            System.out.println("해당 말은 움직일 수 없습니다.");
+            play();
+        }else {
+            System.out.println("다음중 움직일 좌표를 선택해주세요.");
+            for (String direction : directions) {
+                System.out.println(direction);
+            }
+            String input[] = scanner.nextLine().split(",");
+            int x = Integer.parseInt(input[0]);
+            int y = Integer.parseInt(input[1]);
+
+            String oppTargetCoordinate[] = moveTarget.getCoordinate().getCoordinate().split(",");
+
+            //플레이어는 각자 자신의 체스판과 자신이 움직일 말과 상대방의 말을 따로 갖고있다. 따라서, 내 말을 한번 움직일때 '상대방입장에서의 상대방체스판의 상대방 말'도 그에 맞는 위치에 옮겨주어야 한다.
+            move(9 - x, 9 - y, opponent.board, opponent.board.getCoordinate(9 - Integer.parseInt(oppTargetCoordinate[0]), 9 - Integer.parseInt(oppTargetCoordinate[1])).getUnit());
+            move(x, y, board, moveTarget);
+
+            this.isTurn = false;
+            opponent.isTurn = true;
         }
-        String input[] = scanner.nextLine().split(",");
-        int x = Integer.parseInt(input[0]);
-        int y = Integer.parseInt(input[1]);
-
-        String oppTargetCoordinate[] = moveTarget.getCoordinate().getCoordinate().split(",");
-
-        //플레이어는 각자 자신의 체스판과 자신이 움직일 말과 상대방이 움직일 말을 따로 갖고있다. 따라서, 내 말을 한번 움직일때 상대방의 말도 그에 맞는 위치에 옮겨주어야 한다.
-        move(9-x, 9-y, opponent.board, opponent.board.getCoordinate(9-Integer.parseInt(oppTargetCoordinate[0]),9-Integer.parseInt(oppTargetCoordinate[1])).getUnit());
-        move(x,y,board, moveTarget);
-
-
-
-        this.isTurn = false;
-        opponent.isTurn = true;
     }
 
     public void move(int x, int y, Board board, Unit unit){

@@ -27,6 +27,16 @@ public class UnitsCollection {
 
         return units;
     }
+
+    public boolean isEmptyCoordinate(int x, int y, Board board, Player player){
+
+        //이동할 자리에 말이 없거나 혹은 있다면 그 말이 내 말이 아니어야 함.
+        if(!board.getCoordinate(x,y).isUnit()||!board.getCoordinate(x,y).getUnit().getOwner().getName().equals(player.getName())){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public class King implements Unit{
         private String name = "K";
         private Player owner;
@@ -38,7 +48,73 @@ public class UnitsCollection {
 
         @Override
         public List<String> canMoveCoordinate(Board board, Player player) {
-            return null;
+            String now[] = coordinate.getCoordinate().split(",");
+            List<String> directions = new ArrayList<String>();
+            int x = Integer.parseInt(now[0]);
+            int y = Integer.parseInt(now[1]);
+
+            //왕의 경우, 상하좌우 대각 전부다 움직일 수 있다. 이때, 8방향 모두 체크할 필요가 없다. 상하좌우만 체크하면 된다. 예를들어 12시/9시 모두 갈 수 있어야만 11시도 갈 수 있기 때문
+
+            //12시방향
+            boolean top = false;
+            boolean right = false;
+            boolean left = false;
+            boolean bottom = false;
+
+            //이동할 수 있는 경우,
+            if((y+1)<=8){
+                top = true;
+                if(isEmptyCoordinate(x,y+1,board,player)){
+                    directions.add(x+","+(y+1));
+                }
+            }
+
+            if(1<=(y-1)){
+                bottom = true;
+                if(isEmptyCoordinate(x,y-1,board,player)){
+                    directions.add(x+","+(y-1));
+                }
+            }
+
+            if((x+1)<=8){
+                right = true;
+                if(isEmptyCoordinate(x+1,y,board,player)){
+                    directions.add((x+1)+","+y);
+                }
+            }
+
+            if(1<=(x-1)){
+                left = true;
+                if(isEmptyCoordinate(x-1,y,board,player)){
+                    directions.add((x-1)+","+y);
+                }
+            }
+
+            if(top&&right){
+                if(isEmptyCoordinate(x+1,y+1,board,player)){
+                    directions.add((x+1)+","+(y+1));
+                }
+            }
+
+            if(right&&bottom){
+                if(isEmptyCoordinate(x+1,y-1,board,player)){
+                    directions.add((x+1)+","+(y-1));
+                }
+            }
+
+            if(bottom&&left){
+                if(isEmptyCoordinate(x-1,y-1,board,player)){
+                    directions.add((x-1)+","+(y-1));
+                }
+            }
+
+            if(left&&top){
+                if(isEmptyCoordinate(x-1,y+1,board,player)){
+                    directions.add((x-1)+","+(y+1));
+                }
+            }
+
+            return directions;
         }
 
         public String getName() {
@@ -108,9 +184,11 @@ public class UnitsCollection {
         public String getName() {
             return name;
         }
+
         public Player getOwner() {
             return owner;
         }
+
         public void setCoordinate(Board.Coordinate coordinate) {
             this.coordinate = coordinate;
         }
@@ -187,7 +265,6 @@ public class UnitsCollection {
         private String name = "P";
         private Board.Coordinate coordinate;
 
-
         public Pawn(Player owner){
             this.owner = owner;
         }
@@ -209,26 +286,26 @@ public class UnitsCollection {
             //대각으로 전진하는 경우 유닛이 있어야 하며(상대 유닛을 잡음), 그 유닛은 상대방의 유닛이어야 하고, 그 좌표는 1~8까지만 이어야 한다.
             if(1<=(x+1)&&(x+1)<=8&&(y+1)<=8){
                 if(board.getCoordinate(x+1,y+1).isUnit()&&!board.getCoordinate(x+1,y+1).getUnit().getOwner().getName().equals(player.getName())) {
-                    System.out.println("2");
                     directions.add((x + 1) + "," + (y + 1));
                 }
             }
 
             if(1<=(x-1)&&(x-1)<=8&&(y+1)<=8){
                 if(board.getCoordinate(x-1,y+1).isUnit()&&!board.getCoordinate(x-1,y+1).getUnit().getOwner().getName().equals(player.getName())) {
-                    System.out.println("3");
                     directions.add((x - 1) + "," + (y + 1));
                 }
             }
-
             return directions;
         }
+
         public String getName() {
             return name;
         }
+
         public Player getOwner() {
             return owner;
         }
+
         public void setCoordinate(Board.Coordinate coordinate) {
             this.coordinate = coordinate;
         }
@@ -236,6 +313,7 @@ public class UnitsCollection {
         public Board.Coordinate getCoordinate() {
             return coordinate;
         }
+
     }
 
 
