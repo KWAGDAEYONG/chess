@@ -2,6 +2,7 @@ public class Play {
 
     Player p1;
     Player p2;
+    boolean isGameSet = false;
 
     public void setPlayer() {
         p1 = new Player("b");
@@ -18,8 +19,21 @@ public class Play {
         p1.setTurn(true);
         p2.setTurn(false);
 
-        while(true) {
+        while(!isGameSet) {
             play(p1, p2);
+            checkGameSet();
+        }
+    }
+
+    public void checkGameSet(){
+        if(p1.isWin()){
+            isGameSet = true;
+            System.out.println("경기 종료! 승자:"+p1.getName());
+        }
+
+        if(p2.isWin()){
+            isGameSet = true;
+            System.out.println("경기 종료! 승자:"+p2.getName());
         }
     }
 
