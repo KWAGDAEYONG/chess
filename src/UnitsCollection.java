@@ -205,7 +205,6 @@ public class UnitsCollection {
             List<String> directions = new ArrayList<String>();
             int x = Integer.parseInt(now[0]);
             int y = Integer.parseInt(now[1]);
-            System.out.println(name+" 현재위치:"+(x+","+y));
             //왕의 경우, 상하좌우 대각 전부다 움직일 수 있다. 이때, 8방향 모두 체크할 필요가 없다. 상하좌우만 체크하면 된다. 예를들어 12시/9시 모두 갈 수 있어야만 11시도 갈 수 있기 때문
 
             //12시방향
@@ -304,7 +303,6 @@ public class UnitsCollection {
             List<String> directions = new ArrayList<String>();
             int x = Integer.parseInt(now[0]);
             int y = Integer.parseInt(now[1]);
-            System.out.println(name+" 현재위치:"+(x+","+y));
             directions = lookMoveCoordinate(x,y,board,player,directions);
             directions = bishopMoveCoordinate(x,y,board,player,directions);
             return directions;
@@ -342,7 +340,6 @@ public class UnitsCollection {
             List<String> directions = new ArrayList<String>();
             int x = Integer.parseInt(now[0]);
             int y = Integer.parseInt(now[1]);
-            System.out.println(name+" 현재위치:"+(x+","+y));
             directions = lookMoveCoordinate(x,y,board,player,directions);
             return directions;
         }
@@ -381,7 +378,6 @@ public class UnitsCollection {
             List<String> directions = new ArrayList<String>();
             int x = Integer.parseInt(now[0]);
             int y = Integer.parseInt(now[1]);
-            System.out.println(name+" 현재위치:"+(x+","+y));
             directions = bishopMoveCoordinate(x,y,board,player,directions);
             return directions;
         }
@@ -417,7 +413,6 @@ public class UnitsCollection {
             List<String> directions = new ArrayList<String>();
             int x = Integer.parseInt(now[0]);
             int y = Integer.parseInt(now[1]);
-            System.out.println(name+" 현재위치:"+(x+","+y));
             //위로 두칸 갈 수 있다면
             if((y+2)<=8){
                 //왼쪽으로 한번 갈 수 있는지 확인 후
@@ -513,7 +508,6 @@ public class UnitsCollection {
             List<String> directions = new ArrayList<String>();
             int x = Integer.parseInt(now[0]);
             int y = Integer.parseInt(now[1]);
-            System.out.println(name+" 현재위치:"+(x+","+y));
             //앞으로 한칸전진하는 경우 해당 칸에 유닛이 없어야 함.
             if((y+1)<=8){
                 if(isEmptyCoordinate(x,y+1,board,player)) {

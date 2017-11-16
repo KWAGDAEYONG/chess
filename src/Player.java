@@ -175,12 +175,14 @@ public class Player {
     }
 
     public void move(int x, int y, Board board, Unit unit) {
-        System.out.println(unit.getCoordinate().getCoordinate()+"에서 "+x+","+y+"로 옮긴다.");
+
         unit.getCoordinate().leave();
+
         //상대방 판의 상대방 무덤에 상대방 말을 넣는다.
         if (board.getCoordinate(x, y).isUnit()&&board.equals(opponent.board)){
             opponent.dieUnits.add(board.getCoordinate(x, y).getUnit());
         }
+
         //내 판의 상대방 무덤에 상대방 말을 넣는다.
         if (board.getCoordinate(x, y).isUnit()&&board.equals(this.board)){
             oppDieUnits.add(board.getCoordinate(x, y).getUnit());
@@ -188,6 +190,7 @@ public class Player {
 
 
         board.putUnitOnBoard(x, y, unit);
+
 
         //폰이 맨 끝에 도착했으면 다른말로 바꿀 수가 있다.
         if(unit.getName().equals("P")&&(y==8)){
@@ -219,7 +222,7 @@ public class Player {
 
         for(Unit died:opponent.oppDieUnits){
             if(died.getName().equals(input)){
-                move(9-x,9-y,opponent.board,died);
+                opponent.board.putUnitOnBoard(9-x,9-y,died);
                 opponent.oppDieUnits.remove(died);
                 break;
             }
@@ -227,7 +230,7 @@ public class Player {
 
         for(Unit died:dieUnits){
             if(died.getName().equals(input)){
-                move(x,y,board,died);
+                board.putUnitOnBoard(x,y,died);
                 dieUnits.remove(died);
                 break;
             }
