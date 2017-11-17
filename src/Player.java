@@ -1,4 +1,3 @@
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.util.*;
 
@@ -196,6 +195,13 @@ public class Player {
         if(unit.getName().equals("P")&&(y==8)){
             changeFromPawn(x, y);
         }
+
+        //폰은 처음 움직일때만 한번에 두칸 갈수 있으며, 움직이면 이제는 두칸가지 못한다.
+        if(unit.getName().equals("P")){
+            UnitsCollection.Pawn pawn = (UnitsCollection.Pawn)unit;
+            pawn.setFirstMove(false);
+        }
+
     }
 
     public void changeFromPawn(int x, int y){

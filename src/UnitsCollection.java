@@ -497,6 +497,7 @@ public class UnitsCollection {
         private Player owner;
         private String name = "P";
         private Board.Coordinate coordinate;
+        private boolean isFirstMove = true;
 
         public Pawn(Player owner){
             this.owner = owner;
@@ -527,6 +528,12 @@ public class UnitsCollection {
                     directions.add((x - 1) + "," + (y + 1));
                 }
             }
+
+            if(isFirstMove){
+                if(isEmptyCoordinate(x,y+2,board,player)){
+                    directions.add(x+","+(y+2));
+                }
+            }
             return directions;
         }
 
@@ -546,6 +553,9 @@ public class UnitsCollection {
             return coordinate;
         }
 
+        public void setFirstMove(boolean firstMove) {
+            isFirstMove = firstMove;
+        }
     }
 
 

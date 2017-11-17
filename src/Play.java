@@ -10,6 +10,7 @@ public class Play {
     }
 
     public void match() {
+        //게임준비
         p1.setOpponent(p2);
         p2.setOpponent(p1);
 
@@ -19,6 +20,7 @@ public class Play {
         p1.setTurn(true);
         p2.setTurn(false);
 
+        //게임 시작
         while(!isGameSet) {
             play(p1, p2);
             checkGameSet();
