@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UnitsCollection {
-    private Map<String, Unit> units = new HashMap<String, Unit>();
+    private Map<String,Unit> units = new HashMap<String, Unit>();
 
     public Map<String, Unit> getUnits(Player player){
 
